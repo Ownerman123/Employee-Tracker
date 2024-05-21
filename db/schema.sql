@@ -1,6 +1,8 @@
-DROP DATABASE IF EXISTS Employee_db
-CREATE DATABASE Employee_db
-\c Employee_db
+DROP DATABASE IF EXISTS employee_db;
+
+CREATE DATABASE employee_db;
+
+\c employee_db;
 
 CREATE TABLE department(
     id SERIAL PRIMARY KEY,
@@ -13,7 +15,7 @@ CREATE TABLE role (
     salary DECIMAL,
     department_id INT,
     FOREIGN KEY (department_id)
-    REFRENCES department(id)
+    REFERENCES department(id)
     ON DELETE SET NULL
 );
 
@@ -22,5 +24,11 @@ CREATE TABLE employee (
     first_name VARCHAR(30),
     last_name VARCHAR(30),
     role_id INT,
-    
-)
+    manager_id INT,
+    FOREIGN KEY (role_id)
+    REFERENCES role(id),
+    FOREIGN KEY (manager_id)
+    REFERENCES employee(id)
+    ON DELETE SET NULL
+
+);

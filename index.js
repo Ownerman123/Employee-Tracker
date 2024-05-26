@@ -124,7 +124,7 @@ const updateEmployeeQuestions = [
 ];
 
 function waitForInputThenStart() {
-    inquirer.prompt([{type: 'confirm', name: 'confirm', message: 'continue?', default: false}]).then((data) => {if(data.confirm){return loadNeededDataAndStart()}else{ return endApp()}})
+    inquirer.prompt([{type: 'confirm', name: 'confirm', message: 'continue?', default: false}]).then((data) => {console.clear(); if(data.confirm){return loadNeededDataAndStart()}else{ return endApp()}})
 }
 function endApp() {
     console.log('ok Bye!');

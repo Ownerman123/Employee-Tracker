@@ -2,14 +2,14 @@ INSERT INTO department(name)
 VALUES
 ('Managment'),
 ('Kitchen'),
-('Front of house');
+('Front_of_house');
 
 INSERT INTO role (title, salary, department_id)
 VALUES
-('Head Fry Cook', 70000, 2),
-('Manager', 100000, 1),
-('Cashier', 60000, 3),
-('Comic_Relief', 30000, 3);
+('head_fry_cook', 70000, 2),
+('manager', 100000, 1),
+('cashier', 60000, 3),
+('comic_relief', 30000, 3);
 
 INSERT INTO employee (first_name, last_name, role_id, manager_id)
 VALUES

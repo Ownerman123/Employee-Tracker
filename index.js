@@ -14,8 +14,11 @@ async function loadNeededDataAndStart() {
     newEmployeeQuestions[4].choices = employees;
     updateEmployeeQuestions[0].choices = employees;
     updateEmployeeQuestions[3].choices = employees;
+    selectByManagerQuestions[0].choices = employees;
     departments = await db.getDepartmentsArray();
     newRoleQuestions[2].choices = departments
+    selectByDepartmentQuestions[0].choices = departments;
+    viewBudgetByDepartmentQuestions[0].choices = departments;
     StartAtMainMenu();
 }
 
@@ -27,7 +30,7 @@ const mainMenu = [
         type: 'list',
         name: 'option',
         message: "What would you like to do?",
-        choices: ['exit','view all departments','view all roles','view all employees','add employee','add role','add department','update employee']
+        choices: ['exit','view all departments','view all roles','view all employees','view all employees by manager','view all employees by department','view budget utilized by a department','add employee','add role','add department','update employee']
     }
 ];
 const newEmployeeQuestions = [
@@ -93,6 +96,39 @@ const newDepartmentQuestions = [
     
 
 ];
+const selectByManagerQuestions = [
+    {
+        type: 'list',
+        name: 'manager',
+        message:'Which manager do you wish to see the employees of?',
+        choices: employees
+    },
+    
+    
+
+];
+const selectByDepartmentQuestions = [
+    {
+        type: 'list',
+        name: 'department',
+        message:'Which department do you wish to see the employees of?',
+        choices: departments
+    },
+    
+    
+
+];
+const viewBudgetByDepartmentQuestions = [
+    {
+        type: 'list',
+        name: 'department',
+        message:'Which department do you wish to see the budget of?',
+        choices: departments
+    },
+    
+    
+
+];
 const updateEmployeeQuestions = [
     {
         type: 'list',
@@ -143,6 +179,7 @@ inquirer.prompt(mainMenu).then((response) => {
             return 'done';
             
             break;
+
         case 'view all departments':
             
         db.viewAllDepartments();
@@ -150,6 +187,7 @@ inquirer.prompt(mainMenu).then((response) => {
         return 'done';
         
         break;
+
         case 'view all roles':
             
             db.viewAllRoles();
@@ -160,6 +198,7 @@ inquirer.prompt(mainMenu).then((response) => {
             
             
             break;
+
         case 'view all employees':
             
             db.viewAllEmployees();
@@ -168,14 +207,35 @@ inquirer.prompt(mainMenu).then((response) => {
             
             
             break;
+
+            case 'view all employees by manager':
+                return   inquirer.prompt(selectByManagerQuestions)
+               .then((data) => {db.viewAllEmployeesByManager(data.manager);})
+               .then(() => {return 'done';});
+            
+            
+            
+            
+            
+            break;
+
+            case 'view all employees by department':
+                return   inquirer.prompt(selectByDepartmentQuestions)
+               .then((data) => {db.viewAllEmployeesByDepartment(data.department);})
+               .then(() => {return 'done';});
+            
+            break;
+
+            case 'view budget utilized by a department':
+                return   inquirer.prompt(viewBudgetByDepartmentQuestions)
+               .then((data) => {db.viewBudgetByDepartment(data.department);})
+               .then(() => {return 'done';});
+            
+            break;
             
             case 'add employee':
              return   inquirer.prompt(newEmployeeQuestions)
                 .then((data) => {
-                   
-                     return data;
-                    
-        }).then((data) => {
         db.addEmployee(data.firstname, data.lastname, data.role, data.manager);}).then(() => {return 'done';});
             
      
@@ -184,31 +244,20 @@ inquirer.prompt(mainMenu).then((response) => {
             case 'add role':
                return inquirer.prompt(newRoleQuestions)
                 .then((data) => {
-                  
-                     return data;
-                    
-        }).then((data) => {
         db.addRole(data.title, data.salary, data.department);}).then(() => {return 'done';});
             
             break;
 
             case 'add department':
               return  inquirer.prompt(newDepartmentQuestions)
-                .then((data) => {
-                  
-                     return data;
-                    
-        }).then((data) => {
+               .then((data) => {
         db.addDepartment(data.name);}).then(() => {return 'done';});
             
             break;
+
             case 'update employee':
               return  inquirer.prompt(updateEmployeeQuestions)
                 .then((data) => {
-                  
-                     return data;
-                    
-        }).then((data) => {
         db.updateEmployee(data.firstname, data.role, data.manager);}).then(() => {return 'done';});
             
             break;

@@ -65,7 +65,7 @@ class DB {
     async getManagerId(managername){
         if(!managername){return null}else{
             const id = await this.query(`SELECT id FROM employee where first_name = '${managername}';` );
-            console.log('manager id is ', id[0].id);
+            
             return id[0].id;
         }
     }
@@ -95,7 +95,27 @@ class DB {
         console.table(allEmployees);
         return allEmployees;
     }
-    
+    async viewAllEmployeesByManager(manager) {
+        const managerid = await this.getManagerId(manager);
+        const allEmployees = await this.query(`SELECT first_name FROM employee WHERE manager_id = ${managerid} ;`);
+        console.log('\n');
+        console.table(allEmployees);
+        return allEmployees;
+    }
+    async viewAllEmployeesByDepartment(department) {
+        const departmentid = await this.getdepartmentId(department);
+        const allEmployees = await this.query(`SELECT first_name FROM employee JOIN role ON employee.role_id = role.id RIGHT JOIN department ON role.department_id = department.id WHERE role.department_id = ${departmentid} ;`);
+        console.log('\n');
+        console.table(allEmployees);
+        return allEmployees;
+    }
+    async viewBudgetByDepartment(department) {
+        const departmentid = await this.getdepartmentId(department);
+        const departmentBudget = await this.query(`SELECT SUM(salary) FROM employee JOIN role ON employee.role_id = role.id RIGHT JOIN department ON role.department_id = department.id WHERE role.department_id = ${departmentid} ;`);
+        console.log('\n');
+        console.table(departmentBudget);
+        return departmentBudget;
+    }
     
     async addEmployee(firstname, lastname, role, manager){
        const  roleid = await this.getRoleId(role);

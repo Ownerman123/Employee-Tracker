@@ -18,4 +18,4 @@ VALUES
 ('Garry', 'The Snail', 4, 2),
 ('Patrick', 'Star',4, NULL ),
 ('Sandy', 'Cheeks',4, NULL),
-('Squidward', 'Tentacles',3, NULL)
+('Squidward', 'Tentacles',3,1)

@@ -5,7 +5,7 @@ let roles;
 let employees;
 let departments
 
-
+// updates the questions with the new data so that the choices are up to date then starts the app
 async function loadNeededDataAndStart() {
     roles = await db.getRolesArray();
     newEmployeeQuestions[2].choices = roles;
@@ -24,7 +24,7 @@ async function loadNeededDataAndStart() {
 
 loadNeededDataAndStart();
 
-
+// question to create the menu of options
 const mainMenu = [
     {
         type: 'list',
@@ -33,6 +33,8 @@ const mainMenu = [
         choices: ['exit','view all departments','view all roles','view all employees','view all employees by manager','view all employees by department','view budget utilized by a department','add employee','add role','add department','update employee']
     }
 ];
+
+// questions to be asked after the main menu option is selected
 const newEmployeeQuestions = [
     {
         type: 'input',
@@ -159,9 +161,11 @@ const updateEmployeeQuestions = [
 
 ];
 
+
 function waitForInputThenStart() {
     inquirer.prompt([{type: 'confirm', name: 'confirm', message: 'continue?', default: false}]).then((data) => {console.clear(); if(data.confirm){return loadNeededDataAndStart()}else{ return endApp()}})
 }
+// exits the app
 function endApp() {
     console.log('ok Bye!');
     process.exit();
@@ -171,7 +175,7 @@ function StartAtMainMenu(){
 
 inquirer.prompt(mainMenu).then((response) => {
 
-
+//cases for each response to the question
 
     switch (response.option) {
         case 'exit':

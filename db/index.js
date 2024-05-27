@@ -14,6 +14,7 @@ class DB {
         }
     }
 
+    // functions for transforming data into the needed form for the data request to the database
     async getRolesArray() {
         const rolesobj =  await this.query('SELECT title FROM role');
         
@@ -69,6 +70,9 @@ class DB {
             return id[0].id;
         }
     }
+
+// ------------------------------------------------------
+
     //functions for all the data requests
     
     findAllEmployees() {
@@ -165,7 +169,7 @@ class DB {
         }
     }
 
-
+//----------------------------------------------------------------------
 
 
 
